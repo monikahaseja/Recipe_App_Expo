@@ -16,6 +16,8 @@ const Home = ({ navigation }) => {
     const { healthyRecipes } = useContext(HealthyRecipesContext);
     const { recipes } = useContext(RecipesContext);
 
+    console.log('Recipes: >>', JSON.stringify(recipes, null, 2));
+
     useEffect(() => {
         const tagsList = [];
 
@@ -61,7 +63,7 @@ const Home = ({ navigation }) => {
                         image={item?.thumbnail_url}
                         rating={item?.user_ratings?.score}
                         author={item?.credits?.length 
-                            ? { name: item?.credits[0]?.name, image: item?.credits[0]?.image_url } 
+                            ? { name: item?.credits[0]?.name, image: item?.credits[0]?.picture_url } 
                             : null}
                     />
                 )}
