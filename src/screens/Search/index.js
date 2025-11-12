@@ -6,23 +6,23 @@ import Card from "../../components/Card";
 import Input from "../../components/Input";
 import styles from "./styles";
 
-const Search = () => {
-    const { recipes } = useContext(RecipesContext);
-    const [filteredRecipes, setFilteredRecipes] = useState([]);
-    const [keyword, setKeyword] = useState('');
+const Search = ({ navigation }) => {
+    const { recipes } = useContext(RecipesContext)
+    const [filteredRecipes, setFilteredRecipes] = useState([])
+    const [keyword, setKeyword] = useState('')
 
     useEffect(() => {
         if (keyword?.length > 2) {
             const filteredItems = recipes?.filter(rec => rec?.name?.toLowerCase()?.includes(keyword?.toLowerCase()))
             setFilteredRecipes(filteredItems);
         } else {
-            setFilteredRecipes([]);
+            setFilteredRecipes([])
         }
     }, [keyword])
 
     return (
         <SafeAreaView style={styles.container}>
-            <Input autoFocus placeholder='Search Recipe' showSearchIcon={'../../../assets/search.png'} onChangeText={setKeyword} value={keyword} />
+            <Input autoFocus onChangeText={setKeyword} value={keyword} placeholder='Search Recipe' showSearchIcon={'../../../assets/search.png'}/>
 
             <FlatList
                 data={filteredRecipes}
@@ -32,6 +32,7 @@ const Search = () => {
                 renderItem={({ item, index }) => (
                     <Card
                         title={item?.name}
+                        onPress={() => navigation.navigate('RecipeDetails', { item })}
                         servings={item?.num_servings}
                         image={item?.thumbnail_url}
                         rating={item?.user_ratings?.score}
